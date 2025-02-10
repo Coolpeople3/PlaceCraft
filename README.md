@@ -6,3 +6,4 @@ MADE BY PEOPLE IN A PLACE
 - make the zombies have zombie skin texture
 - add a limit to the distance at which we can place/remove blocks
 - make a healthbar and it depreaciates slowly with a smooth countdown (while zombie is touching remove healh by 1, wait 0.5 seconds, repeat) when a zombie is touching you.
+- add a animatino when the zombie hits you
