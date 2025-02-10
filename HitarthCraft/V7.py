@@ -4,7 +4,7 @@ import random
 
 app = Ursina()
 
-# Create a sun entity for the daylight simulation
+
 sun = Entity(
     model='sphere',
     color=color.yellow,
@@ -15,6 +15,9 @@ sun = Entity(
     enabled=True
 )
 
+
+sky = Sky()
+
 daylight_cycle_speed = 0.1  # Controls the speed of the day-night cycle
 time_of_day = 0  # 0 means morning, 0.5 means noon, 1 means evening
 
@@ -24,10 +27,10 @@ def update():
     if time_of_day >= 1:
         time_of_day = 0  # Reset to morning when it reaches the end of the cycle
 
-    # Adjust the sun's rotation to simulate the day-night cycle
+   
     sun.rotation_x = (time_of_day * 360) - 90  # Change rotation to simulate sun movement
 
-    # Adjust the sunlight intensity based on the time of day
+  
     if 0.25 <= time_of_day < 0.75:  # Daytime (morning to evening)
         sun.light.intensity = 1
         sun.color = color.yellow
@@ -35,17 +38,25 @@ def update():
         sun.light.intensity = 0.2
         sun.color = color.blue
 
-    # Update the sky color for day and night simulation
+   
     if 0.25 <= time_of_day < 0.75:
         sky.color = color.sky
     else:
         sky.color = color.black
 
-spawn_zombie()
-for _ in range(5):  # Spawn initial zombies
-    invoke(spawn_zombie, delay=5)
 
-app.run()
+def spawn_zombie():
+    x = random.randint(-10, 10)
+    z = random.randint(-10, 10)
+    Zombie(position=(x, 1, z))
+
+
+def spawn_zombie_periodically():
+    spawn_zombie()
+    invoke(spawn_zombie_periodically, delay=random.uniform(3, 6))  # Spawn every 3-6 seconds
+
+spawn_zombie_periodically()  # Start periodic zombie spawning
+
 
 block_types = {
     1: ('textures/dirt_texture.png', color.white),
@@ -56,6 +67,7 @@ weapon_types = {
 }
 
 selected_slot = 1
+
 
 class Block(Button):
     def __init__(self, position=(0, 0, 0), block_type=1):
@@ -69,6 +81,7 @@ class Block(Button):
             color=color_value,
             highlight_color=color.lime
         )
+
 
 class Bullet(Entity):
     def __init__(self, position, direction):
@@ -93,17 +106,18 @@ class Bullet(Entity):
     def start_timer(self):
         destroy(self, delay=2)
 
+
 class Zombie(Entity):
     def __init__(self, position):
         super().__init__(
-            model='models/zombie_model.stl',  
+            model='cube',  # Temporarily using a cube for testing
             color=color.red,
             scale=(0.03, 0.06, 0.03),  # Make it taller
             position=position,
             collider='box',
             health=3
         )
-        self.rotation_x = -90 #rotate it to make it upright
+        self.rotation_x = -90  # Rotate to make it upright
         self.rotation_y = 180
         self.health = 3
         self.walk_speed = 1
@@ -125,9 +139,10 @@ class Zombie(Entity):
         self.is_alive = False
         destroy(self)
 
+
 player = FirstPersonController()
 
-# Inventory UI (Hotbar)
+
 hotbar_bg = Entity(parent=camera.ui, model='quad', scale=(0.6, 0.12), position=(0, -0.45), color=color.dark_gray)
 hotbar = Entity(parent=camera.ui, scale=(0.5, 0.1), position=(0, -0.45))
 inventory_slots = []
@@ -155,6 +170,7 @@ def create_world():
         for z in range(-10, 10):
             Block(position=(x, 0, z), block_type=2)
 
+
 def input(key):
     global selected_slot
 
@@ -176,19 +192,11 @@ def input(key):
         selected_slot = int(key)
         selector.x = (selected_slot - 1) * 0.1 - 0.4
 
+
 def shoot():
     bullet = Bullet(position=player.position + (player.forward * 1.5), direction=player.forward)
 
+
 create_world()
 
-def spawn_zombie():
-    x = random.randint(-10, 10)
-    z = random.randint(-10, 10)
-    Zombie(position=(x, 1, z))
-
-
-spawn_zombie()
-for _ in range(5):  # Spawn initial zombies
-    invoke(spawn_zombie, delay=5)
-
-app.run()
+app.run() 
