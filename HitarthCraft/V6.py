@@ -141,10 +141,8 @@ def spawn_zombie():
     z = random.randint(-10, 10)
     Zombie(position=(x, 1, z))
 
+spawn_zombie()
 for _ in range(5):  # Spawn initial zombies
-    spawn_zombie()
-
-invoke(spawn_zombie, delay=5)         # Call it once after 5 seconds
-invoke(spawn_zombie, delay=5, forever=True)  # Then every 5 seconds
+    invoke(spawn_zombie, delay=5)
 
 app.run()
