@@ -4,6 +4,49 @@ import random
 
 app = Ursina()
 
+# Create a sun entity for the daylight simulation
+sun = Entity(
+    model='sphere',
+    color=color.yellow,
+    scale=2,
+    position=(0, 20, 0),
+    light=DirectionalLight(),
+    rotation=(45, 45, 0),
+    enabled=True
+)
+
+daylight_cycle_speed = 0.1  # Controls the speed of the day-night cycle
+time_of_day = 0  # 0 means morning, 0.5 means noon, 1 means evening
+
+def update():
+    global time_of_day
+    time_of_day += daylight_cycle_speed * time.dt  # Increase time of day
+    if time_of_day >= 1:
+        time_of_day = 0  # Reset to morning when it reaches the end of the cycle
+
+    # Adjust the sun's rotation to simulate the day-night cycle
+    sun.rotation_x = (time_of_day * 360) - 90  # Change rotation to simulate sun movement
+
+    # Adjust the sunlight intensity based on the time of day
+    if 0.25 <= time_of_day < 0.75:  # Daytime (morning to evening)
+        sun.light.intensity = 1
+        sun.color = color.yellow
+    else:  # Nighttime (evening to morning)
+        sun.light.intensity = 0.2
+        sun.color = color.blue
+
+    # Update the sky color for day and night simulation
+    if 0.25 <= time_of_day < 0.75:
+        sky.color = color.sky
+    else:
+        sky.color = color.black
+
+spawn_zombie()
+for _ in range(5):  # Spawn initial zombies
+    invoke(spawn_zombie, delay=5)
+
+app.run()
+
 block_types = {
     1: ('textures/dirt_texture.png', color.white),
     2: ('textures/grass_texture.png', color.white)
@@ -142,6 +185,7 @@ def spawn_zombie():
     x = random.randint(-10, 10)
     z = random.randint(-10, 10)
     Zombie(position=(x, 1, z))
+
 
 spawn_zombie()
 for _ in range(5):  # Spawn initial zombies
