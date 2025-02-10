@@ -32,7 +32,7 @@ class Block(Button):
 
 # Bullet class
 class Bullet(Entity):
-    def __init__(self, position, direction):q
+    def __init__(self, position, direction):
         super().__init__(
             model='models/bullet.stl',
             color=color.red,
