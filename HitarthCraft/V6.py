@@ -53,9 +53,9 @@ class Bullet(Entity):
 class Zombie(Entity):
     def __init__(self, position):
         super().__init__(
-            model='cube',  # Or a more detailed model if you have one
+            model='models/zombie_model.stl',  # Or a more detailed model if you have one
             color=color.green,
-            scale=(1, 2, 1),  # Make it taller
+            scale=(0.03, 0.06, 0.03),  # Make it taller
             position=position,
             collider='box',
             health=3
