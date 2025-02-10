@@ -65,10 +65,11 @@ class Zombie(Entity):
     def __init__(self, position):
         super().__init__(
             model='models/zombie_model.stl',
-            color=color.red,
+            #color=color.red,
             scale=(0.05, 0.1, 0.05),
             position=position,
-            collider='box'
+            collider='box',
+            texture='textures/zombie_skin_texture.png'
         )
         self.rotation_x = -90
         self.rotation_y = 180
