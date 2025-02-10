@@ -68,8 +68,7 @@ class Zombie(Entity):
             #color=color.red,
             scale=(0.05, 0.1, 0.05),
             position=position,
-            collider='box',
-            texture='textures/zombie_skin_texture.png'
+            collider='box'
         )
         self.rotation_x = -90
         self.rotation_y = 180
