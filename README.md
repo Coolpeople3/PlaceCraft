@@ -1,5 +1,5 @@
 # Change in plans
-Instead of making one giant open-world which causes lag and troubles, we can make make seperate levels on different files (all a variation of one another) and a main terminal to access them. so they can access level one, and perhaps find a chest that they open to unlock level 2, and so on.
+Instead of making one giant open-world which causes lag and troubles, we can make make seperate levels on different files (all a variation of one another) and a main terminal to access them. so they can access level one, and perhaps find a chest that they open to unlock level 2, and so on. 
 
 
 # PlaceCraft
@@ -11,4 +11,4 @@ MADE BY PEOPLE IN A PLACE
 - add a limit to the distance at which we can place/remove blocks
 - make a healthbar and it depreaciates slowly with a smooth countdown (while zombie is touching remove healh by 1, wait 0.5 seconds, repeat) when a zombie is touching you.
 - add a animatino when the zombie hits you
-- make the world load in chunks to prevent lag
+- MAKE THE WOLD GENERATION NOT FLAT, CUSTOM
