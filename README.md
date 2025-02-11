@@ -1,3 +1,7 @@
+# Change in plans
+Instead of making one giant open-world which causes lag and troubles, we can make make seperate levels on different files (all a variation of one another) and a main terminal to access them. so they can access level one, and perhaps find a chest that they open to unlock level 2, and so on.
+
+
 # PlaceCraft
 MADE BY PEOPLE IN A PLACE 
 
